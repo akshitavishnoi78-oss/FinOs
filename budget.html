@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>if(!localStorage.getItem('finos_current_user')){location.replace('welcome.html');}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget Planner — FinOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="budget">
+<div class="app">
+  <aside class="sidebar">
+    <div>
+      <div class="brand">
+        <div class="mark"><span>FinOS</span><span class="dot">•</span></div>
+        <div class="tag">Personal Finance Operating System</div>
+      </div>
+      <nav class="navlist" id="navlist">
+        <a href="index.html" data-page="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          Dashboard
+        </a>
+        <a href="income.html" data-page="income">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+          Income Tracker
+        </a>
+        <a href="expenses.html" data-page="expenses">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg>
+          Expense Tracker
+        </a>
+        <a href="budget.html" data-page="budget">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12.5" y="8" width="3" height="10"/><rect x="18" y="5" width="3" height="13"/></svg>
+          Budget Planner
+        </a>
+        <a href="savings.html" data-page="savings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M8.5 9.5c0-1.4 1.3-2.5 3.5-2.5s3.5 1 3.5 2.2c0 2.8-7 1.3-7 4 0 1.3 1.5 2.3 3.5 2.3s3.5-1 3.5-2.3"/></svg>
+          Savings Goals
+        </a>
+        <div class="navgap"></div>
+        <a href="emi.html" data-page="emi">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
+          EMI Calculator
+        </a>
+        <a href="sip.html" data-page="sip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l5-6 4 4 8-10"/><path d="M15 5h5v5"/></svg>
+          SIP Calculator
+        </a>
+      </nav>
+    </div>
+    <div class="sidebar-foot">
+      <div class="user-chip">
+        <span class="user-avatar" id="current-user-avatar"></span>
+        <span class="user-name" id="current-user-label"></span>
+        <button class="logout-btn" id="logout-btn" title="Sign out">Sign out</button>
+      </div>
+      Frontend-only build · every figure below is your own input, saved to this browser
+      <div class="stack-badges"><span>HTML</span><span>CSS</span><span>JS</span></div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="view-head">
+      <div class="eyebrow">Planning</div>
+      <h1>Budget Planner &amp; Tracker</h1>
+      <p>Set a monthly budget per category and track progress against the expenses you've logged.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h2 class="card-title">Category-wise Budget Progress</h2>
+        <div class="card-subtitle" id="budget-month-label"></div>
+        <div id="budget-bars" style="margin-top:6px;"></div>
+      </div>
+      <div class="card">
+        <h2 class="card-title">Set a Budget</h2>
+        <div class="card-subtitle">Assign a monthly limit to a category</div>
+        <form class="form-grid" id="budget-form" style="grid-template-columns:1fr;">
+          <div class="field">
+            <label>Category</label>
+            <select id="budget-category">
+              <option>Food</option><option>Shopping</option><option>Transport</option>
+              <option>Fuel</option><option>Rent</option><option>EMI</option>
+              <option>Utilities</option><option>Entertainment</option><option>Medical</option>
+              <option>Education</option><option>Travel</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Monthly Limit (₹)</label>
+            <input type="number" id="budget-limit" min="0" step="1" placeholder="0" required>
+          </div>
+          <div class="field">
+            <button type="submit" class="btn primary" style="width:100%;">Save Budget</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-note">FinOS — built entirely with HTML, CSS &amp; JavaScript. No backend, no database; every number on this site is data you entered yourself, saved to this browser.</div>
+  </main>
+</div>
+<script src="auth.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

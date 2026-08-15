@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>if(localStorage.getItem('finos_current_user')){location.replace('index.html');}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome — FinOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="welcome">
+<div class="welcome-shell">
+  <div class="welcome-hero">
+    <div class="brand">
+      <div class="mark"><span>FinOS</span><span class="dot">•</span></div>
+      <div class="tag">Personal Finance Operating System</div>
+    </div>
+    <h1 class="welcome-title">Your money,<br>tracked on your terms.</h1>
+    <p class="welcome-copy">Log income and expenses, plan a monthly budget, chase savings goals, and model loans or SIPs — all in one place. Sign in so this browser remembers your numbers next time you're back.</p>
+    <ul class="welcome-feats">
+      <li><span class="fdot emerald"></span>Income &amp; expense tracking with categories</li>
+      <li><span class="fdot amber"></span>Budget planner with progress bars</li>
+      <li><span class="fdot rose"></span>Savings goals, EMI &amp; SIP calculators</li>
+    </ul>
+    <div class="footer-note" style="margin-top:36px; max-width:420px;">FinOS is frontend-only — no server, no database. Your account and every figure you enter is saved to this browser alone.</div>
+  </div>
+
+  <div class="welcome-panel">
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-signin" type="button">Sign In</button>
+        <button class="auth-tab" id="tab-signup" type="button">Create Account</button>
+      </div>
+
+      <form id="signin-form" class="auth-form">
+        <div class="field">
+          <label>Username</label>
+          <input type="text" id="signin-username" autocomplete="username" placeholder="e.g. akshita" required>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="signin-password" autocomplete="current-password" placeholder="••••••••" required>
+        </div>
+        <div class="auth-error" id="signin-error"></div>
+        <button type="submit" class="btn primary" style="width:100%;">Sign In</button>
+      </form>
+
+      <form id="signup-form" class="auth-form" style="display:none;">
+        <div class="field">
+          <label>Choose a Username</label>
+          <input type="text" id="signup-username" autocomplete="username" placeholder="e.g. akshita" required>
+        </div>
+        <div class="field">
+          <label>Choose a Password</label>
+          <input type="password" id="signup-password" autocomplete="new-password" placeholder="At least 4 characters" required>
+        </div>
+        <div class="field">
+          <label>Confirm Password</label>
+          <input type="password" id="signup-confirm" autocomplete="new-password" placeholder="••••••••" required>
+        </div>
+        <div class="auth-error" id="signup-error"></div>
+        <button type="submit" class="btn primary" style="width:100%;">Create Account &amp; Continue</button>
+      </form>
+
+      <div class="auth-switch" id="auth-switch">
+        New here? <a href="#" id="go-signup">Create an account</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="auth.js"></script>
+<script>
+const tabSignin = document.getElementById('tab-signin');
+const tabSignup = document.getElementById('tab-signup');
+const formSignin = document.getElementById('signin-form');
+const formSignup = document.getElementById('signup-form');
+const switchWrap = document.getElementById('auth-switch');
+const goSignup = document.getElementById('go-signup');
+
+function showSignin(){
+  tabSignin.classList.add('active'); tabSignup.classList.remove('active');
+  formSignin.style.display = ''; formSignup.style.display = 'none';
+  switchWrap.innerHTML = 'New here? <a href="#" id="go-signup">Create an account</a>';
+  document.getElementById('go-signup').addEventListener('click', (e)=>{ e.preventDefault(); showSignup(); });
+}
+function showSignup(){
+  tabSignup.classList.add('active'); tabSignin.classList.remove('active');
+  formSignup.style.display = ''; formSignin.style.display = 'none';
+  switchWrap.innerHTML = 'Already have an account? <a href="#" id="go-signin">Sign in</a>';
+  document.getElementById('go-signin').addEventListener('click', (e)=>{ e.preventDefault(); showSignin(); });
+}
+tabSignin.addEventListener('click', showSignin);
+tabSignup.addEventListener('click', showSignup);
+goSignup.addEventListener('click', (e)=>{ e.preventDefault(); showSignup(); });
+
+formSignin.addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const u = document.getElementById('signin-username').value;
+  const p = document.getElementById('signin-password').value;
+  const res = login(u, p);
+  const errEl = document.getElementById('signin-error');
+  if(res.ok){ window.location.href = 'index.html'; }
+  else { errEl.textContent = res.error; errEl.style.display = 'block'; }
+});
+
+formSignup.addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const u = document.getElementById('signup-username').value;
+  const p = document.getElementById('signup-password').value;
+  const c = document.getElementById('signup-confirm').value;
+  const errEl = document.getElementById('signup-error');
+  if(p !== c){ errEl.textContent = 'Passwords do not match.'; errEl.style.display = 'block'; return; }
+  const res = signup(u, p);
+  if(res.ok){ window.location.href = 'index.html'; }
+  else { errEl.textContent = res.error; errEl.style.display = 'block'; }
+});
+</script>
+</body>
+</html>
