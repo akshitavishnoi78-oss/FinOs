@@ -105,10 +105,17 @@ function prevMonthKey(mKey){
 
 function daysUntil(day){
   const now = new Date();
-  let target = new Date(now.getFullYear(), now.getMonth(), day);
-  if(target < new Date(now.getFullYear(), now.getMonth(), now.getDate())){
-    target = new Date(now.getFullYear(), now.getMonth()+1, day);
+  function clamp(y, m, d){
+    const lastDay = new Date(y, m+1, 0).getDate();
+    return new Date(y, m, Math.min(d, lastDay));
   }
+  let target = clamp(now.getFullYear(), now.getMonth(), day);
+  const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  if(target < todayMid){
+    target = clamp(now.getFullYear(), now.getMonth()+1, day);
+  }
+  return Math.ceil((target - todayMid) / 86400000);
+}
   const diff = Math.ceil((target - new Date(now.getFullYear(),now.getMonth(),now.getDate())) / 86400000);
   return diff;
 }
@@ -442,7 +449,8 @@ function avgMonthlySavingsRate(){
   const pKey = prevMonthKey(mKey);
   const thisMonth = monthlyTotal(state.income, mKey) - monthlyTotal(state.expenses, mKey);
   const lastMonth = monthlyTotal(state.income, pKey) - monthlyTotal(state.expenses, pKey);
-  const vals = [thisMonth, lastMonth].filter(v=>v>0);
+  const vals = [thisMonth, lastMonth];
+   return vals.reduce((a,b)=>a+b,0) / vals.length;
   if(!vals.length) return 0;
   return vals.reduce((a,b)=>a+b,0) / vals.length;
 }
