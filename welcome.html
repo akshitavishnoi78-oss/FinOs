@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>
-fetch('http://localhost:4000/api/auth/me', { credentials: 'include' })
+fetch('https://finos-4uij.onrender.com/api/auth/me', { credentials: 'include' })
   .then(res => { if(res.ok){ location.replace('index.html'); } })
   .catch(() => { /* backend not reachable — just stay on this page */ });
 </script>

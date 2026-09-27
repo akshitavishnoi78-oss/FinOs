@@ -4,7 +4,7 @@
    an httpOnly login cookie, so the browser handles "staying signed in"
    automatically — we never touch localStorage for auth anymore.
    ======================================================================== */
-const API_BASE = 'http://localhost:4000/api';
+const API_BASE = 'https://finos-4uij.onrender.com/api';
 
 // Every backend call goes through this one helper: it always sends the
 // login cookie (credentials:'include'), always sends/expects JSON, and
