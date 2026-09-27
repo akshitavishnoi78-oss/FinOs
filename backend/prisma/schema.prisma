@@ -1,0 +1,81 @@
+// This file defines your database tables. Prisma turns this into
+// real SQL tables and gives you JS functions to query them.
+// Docs: https://www.prisma.io/docs
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // SQLite for fast local dev — just a file, no DB server needed.
+  // To deploy later, change this to:
+  //   provider = "postgresql"
+  //   url      = env("DATABASE_URL")   // e.g. a free Neon/Supabase/Railway Postgres URL
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int        @id @default(autoincrement())
+  username     String     @unique
+  passwordHash String
+  createdAt    DateTime   @default(now())
+
+  income   Income[]
+  expenses Expense[]
+  budgets  Budget[]
+  bills    Bill[]
+  goals    Goal[]
+}
+
+model Income {
+  id     Int    @id @default(autoincrement())
+  source String
+  amount Float
+  date   String // "YYYY-MM-DD", same format the frontend already uses
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+}
+
+model Expense {
+  id       Int     @id @default(autoincrement())
+  category String
+  amount   Float
+  date     String
+  note     String?
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+}
+
+model Budget {
+  id       Int   @id @default(autoincrement())
+  category String
+  limit    Float
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+
+  @@unique([userId, category]) // one budget limit per category per user
+}
+
+model Bill {
+  id     Int    @id @default(autoincrement())
+  name   String
+  amount Float
+  day    Int // day of month, 1-31
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+}
+
+model Goal {
+  id     Int    @id @default(autoincrement())
+  name   String
+  target Float
+  saved  Float  @default(0)
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+}
