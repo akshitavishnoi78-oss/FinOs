@@ -9,7 +9,7 @@ const router = express.Router();
 // Cookie options shared by login + logout
 const COOKIE_OPTS = {
   httpOnly: true,        // JS on the page can't read this cookie (helps against XSS)
-  sameSite: 'lax',
+  sameSite: 'none',
   secure: process.env.NODE_ENV === 'production', // HTTPS only in production
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 };
