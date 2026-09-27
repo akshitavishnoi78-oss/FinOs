@@ -11,7 +11,7 @@ datasource db {
   // To deploy later, change this to:
   //   provider = "postgresql"
   //   url      = env("DATABASE_URL")   // e.g. a free Neon/Supabase/Railway Postgres URL
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

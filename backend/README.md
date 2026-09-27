@@ -37,7 +37,7 @@ npm run dev
 ```
 Server runs at `http://localhost:4000`. Test it's alive:
 ```bash
-curl http://localhost:4000/api/health
+curlhttps://finos-4uij.onrender.com/api/health
 ```
 
 ## Inspect your data visually
@@ -68,17 +68,17 @@ All routes except `/api/auth/*` require a valid login (a `token` cookie set at s
 
 ```bash
 # Sign up (cookie gets saved to cookies.txt)
-curl -c cookies.txt -X POST http://localhost:4000/api/auth/signup \
+curl -c cookies.txt -X POSThttps://finos-4uij.onrender.com/api/auth/signup \
   -H "Content-Type: application/json" \
   -d '{"username":"test","password":"test123"}'
 
 # Add income, using the saved cookie
-curl -b cookies.txt -X POST http://localhost:4000/api/income \
+curl -b cookies.txt -X POSThttps://finos-4uij.onrender.com/api/income \
   -H "Content-Type: application/json" \
   -d '{"source":"Salary","amount":50000,"date":"2026-09-01"}'
 
 # Fetch it back
-curl -b cookies.txt http://localhost:4000/api/income
+curl -b cookies.txthttps://finos-4uij.onrender.com/api/income
 ```
 
 ## Deploying with a real database (Postgres)
